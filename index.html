@@ -1,0 +1,80 @@
+<!DOCTYPE html > 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<title>jQuery Cycle Link Within with BBQ and Hashchange Event</title> 
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+
+  
+<link href="style.css" rel="stylesheet" type="text/css" /> 
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="plugins.js"></script>
+<script type="text/javascript">
+$(function () {
+	// funkyscions
+	function currentSlide() {
+		var hash = window.location.hash || '#photo-1';
+		return parseInt(hash.replace(/[A-Za-z#\-\/!]/g, '') - 1); 
+	}
+	// global vars	
+	var	cycleSelector = $('.slideshow'),
+			startSlide = currentSlide();
+	
+	// start jQuery Cycle			
+	cycleSelector.before('<div id="nav"><ul/></div>') 
+	.cycle({ 
+		 startingSlide: startSlide,
+   	 onPrevNextEvent: function(isNext, idx, slide) { 
+   	 	window.location.hash = "photo-"+ (parseInt(idx) + 1) + ""; return false;
+   	 	return false;
+   	 },
+   	 onPagerEvent: function(idx, slide) { 
+   	 	window.location.hash = "photo-"+ (parseInt(idx) + 1) + ""; return false; 
+   	 	return false;
+   	 },
+   	 timeout: 0, 
+   	 pager:  '#nav ul',
+   	 next: '#next',
+   	 fx : 'none',
+   	 prev: '#prev',
+   	 pagerAnchorBuilder: function(idx, slide) { 
+       return '<li><a href="#photo-'+ (idx+1) +'"><img src="' + slide.src + '" width="50" height="50" /></a></li>'; 
+    } 
+	});
+	
+	
+	$(window).bind('hashchange', function () {
+			var slideNo = currentSlide();
+			cycleSelector.cycle(slideNo);
+			return false;
+	}); 
+	
+	$(window).trigger( "hashchange" );
+	
+});
+
+
+</script>
+
+</head> 
+<body> 
+
+<a href="#" id="prev">Prev</a>
+<a href="#" id="next">Next</a>
+
+	<div class="slideshow"> 
+		<img src="http://vowtoremember.com/photos/SITE-121.jpg" alt="" />
+		<img src="http://vowtoremember.com/photos/SITE-122.jpg" alt="" />
+		<img src="http://vowtoremember.com/photos/SITE-123.jpg" alt="" />
+		<img src="http://vowtoremember.com/photos/SITE-114.jpg" alt="" />
+		<img src="http://vowtoremember.com/photos/SITE-115.jpg" alt="" />
+		<img src="http://vowtoremember.com/photos/SITE-126.jpg" alt="" />
+		<img src="http://vowtoremember.com/photos/SITE-127.jpg" alt="" />
+		<img src="http://vowtoremember.com/photos/SITE-128.jpg" alt="" />
+		<img src="http://vowtoremember.com/photos/SITE-129.jpg" alt="" />
+	</div> 
+
+
+</body> 
+</html>
