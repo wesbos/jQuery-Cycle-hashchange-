@@ -1,5 +1,5 @@
 <!DOCTYPE html > 
-<html xmlns="http://www.w3.org/1999/xhtml"> 
+<html> 
 <head> 
 <title>jQuery Cycle Link Within with BBQ and Hashchange Event</title> 
  
@@ -12,31 +12,35 @@
 <script type="text/javascript" src="plugins.js"></script>
 <script type="text/javascript">
 $(function () {
-	// funkyscions
+
+	// get current slide
 	function currentSlide() {
 		var hash = window.location.hash || '#photo-1';
 		return parseInt(hash.replace(/[A-Za-z#\-\/!]/g, '') - 1); 
 	}
 	// global vars	
 	var	cycleSelector = $('.slideshow'),
-			startSlide = currentSlide();
+			startSlide = currentSlide(),
+			hasSlid = 0;
 	
 	// start jQuery Cycle			
 	cycleSelector.before('<div id="nav"><ul/></div>') 
 	.cycle({ 
 		 startingSlide: startSlide,
    	 onPrevNextEvent: function(isNext, idx, slide) { 
-   	 	window.location.hash = "photo-"+ (parseInt(idx) + 1) + ""; return false;
+   	 	hasSlid = 1;
+   	 	window.location.hash = "photo-"+ (parseInt(idx) + 1) + ""; 
    	 	return false;
    	 },
    	 onPagerEvent: function(idx, slide) { 
-   	 	window.location.hash = "photo-"+ (parseInt(idx) + 1) + ""; return false; 
+   	 	hasSlid = 1;
+   	 	window.location.hash = "photo-"+ (parseInt(idx) + 1) + ""; 
+   	 	
    	 	return false;
    	 },
    	 timeout: 0, 
    	 pager:  '#nav ul',
    	 next: '#next',
-   	 fx : 'none',
    	 prev: '#prev',
    	 pagerAnchorBuilder: function(idx, slide) { 
        return '<li><a href="#photo-'+ (idx+1) +'"><img src="' + slide.src + '" width="50" height="50" /></a></li>'; 
@@ -46,8 +50,10 @@ $(function () {
 	
 	$(window).bind('hashchange', function () {
 			var slideNo = currentSlide();
-			cycleSelector.cycle(slideNo);
-			return false;
+			// we only want to fire the slide change if the next button or the pager hasn't done it for us
+			if (hasSlid === 0) { cycleSelector.cycle(slideNo); console.log('was hashchanged but nothing was clicked'); }
+			// return it back to zero
+			hasSlid = 0;
 	}); 
 	
 	$(window).trigger( "hashchange" );
@@ -59,21 +65,21 @@ $(function () {
 
 </head> 
 <body> 
-
+<div id="wrapper">
 <a href="#" id="prev">Prev</a>
 <a href="#" id="next">Next</a>
 
 	<div class="slideshow"> 
-		<img src="http://vowtoremember.com/photos/SITE-121.jpg" alt="" />
-		<img src="http://vowtoremember.com/photos/SITE-122.jpg" alt="" />
-		<img src="http://vowtoremember.com/photos/SITE-123.jpg" alt="" />
-		<img src="http://vowtoremember.com/photos/SITE-114.jpg" alt="" />
-		<img src="http://vowtoremember.com/photos/SITE-115.jpg" alt="" />
-		<img src="http://vowtoremember.com/photos/SITE-126.jpg" alt="" />
-		<img src="http://vowtoremember.com/photos/SITE-127.jpg" alt="" />
-		<img src="http://vowtoremember.com/photos/SITE-128.jpg" alt="" />
-		<img src="http://vowtoremember.com/photos/SITE-129.jpg" alt="" />
+		<img src="http://farm5.static.flickr.com/4029/4646753786_4a219fbbe3_z.jpg" alt="" />
+		<img src="http://farm4.static.flickr.com/3472/3817281628_d5933948db_z.jpg" alt="" />
+		<img src="http://farm1.static.flickr.com/199/476514422_0c1424fb06_z.jpg?zz=1" alt="" />
+		<img src="http://farm2.static.flickr.com/1311/909213290_161035cf47.jpg" alt="" />
+		<img src="http://farm4.static.flickr.com/3088/2688916488_1a125cd0e7_z.jpg" alt="" />
+		<img src="http://farm1.static.flickr.com/215/520495246_22da7d843b.jpg" alt="" />
+		<img src="http://farm4.static.flickr.com/3537/3492378275_fceca7bf0e_z.jpg?zz=1" alt="" />
 	</div> 
+	
+</div>
 
 
 </body> 
