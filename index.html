@@ -8,6 +8,25 @@
   
 <link href="style.css" rel="stylesheet" type="text/css" /> 
 
+</head> 
+<body> 
+<div id="wrapper">
+<a href="#" id="prev">Prev</a>
+<a href="#" id="next">Next</a>
+
+	<div class="slideshow"> 
+		<img src="http://farm5.static.flickr.com/4029/4646753786_4a219fbbe3_z.jpg" alt="" />
+		<img src="http://farm4.static.flickr.com/3472/3817281628_d5933948db_z.jpg" alt="" />
+		<img src="http://farm1.static.flickr.com/199/476514422_0c1424fb06_z.jpg?zz=1" alt="" />
+		<img src="http://farm2.static.flickr.com/1311/909213290_161035cf47.jpg" alt="" />
+		<img src="http://farm4.static.flickr.com/3088/2688916488_1a125cd0e7_z.jpg" alt="" />
+		<img src="http://farm1.static.flickr.com/215/520495246_22da7d843b.jpg" alt="" />
+		<img src="http://farm4.static.flickr.com/3537/3492378275_fceca7bf0e_z.jpg?zz=1" alt="" />
+	</div> 
+	
+</div>
+
+
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 <script type="text/javascript" src="plugins.js"></script>
 <script type="text/javascript">
@@ -42,6 +61,7 @@ $(function () {
    	 pager:  '#nav ul',
    	 next: '#next',
    	 prev: '#prev',
+   	 speed: 300,
    	 pagerAnchorBuilder: function(idx, slide) { 
        return '<li><a href="#photo-'+ (idx+1) +'"><img src="' + slide.src + '" width="50" height="50" /></a></li>'; 
     } 
@@ -62,25 +82,6 @@ $(function () {
 
 
 </script>
-
-</head> 
-<body> 
-<div id="wrapper">
-<a href="#" id="prev">Prev</a>
-<a href="#" id="next">Next</a>
-
-	<div class="slideshow"> 
-		<img src="http://farm5.static.flickr.com/4029/4646753786_4a219fbbe3_z.jpg" alt="" />
-		<img src="http://farm4.static.flickr.com/3472/3817281628_d5933948db_z.jpg" alt="" />
-		<img src="http://farm1.static.flickr.com/199/476514422_0c1424fb06_z.jpg?zz=1" alt="" />
-		<img src="http://farm2.static.flickr.com/1311/909213290_161035cf47.jpg" alt="" />
-		<img src="http://farm4.static.flickr.com/3088/2688916488_1a125cd0e7_z.jpg" alt="" />
-		<img src="http://farm1.static.flickr.com/215/520495246_22da7d843b.jpg" alt="" />
-		<img src="http://farm4.static.flickr.com/3537/3492378275_fceca7bf0e_z.jpg?zz=1" alt="" />
-	</div> 
-	
-</div>
-
 
 </body> 
 </html>
