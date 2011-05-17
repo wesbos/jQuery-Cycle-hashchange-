@@ -10,9 +10,11 @@
 
 </head> 
 <body> 
+
 <div id="wrapper">
-<a href="#" id="prev">Prev</a>
-<a href="#" id="next">Next</a>
+
+	<a href="#" id="prev">Prev</a>
+	<a href="#" id="next">Next</a>
 
 	<div class="slideshow"> 
 		<img src="http://farm5.static.flickr.com/4029/4646753786_4a219fbbe3_z.jpg" alt="" />
@@ -32,7 +34,7 @@
 <script type="text/javascript">
 $(function () {
 
-	// get current slide
+	// get current slide's number
 	function currentSlide() {
 		var hash = window.location.hash || '#photo-1';
 		return parseInt(hash.replace(/[A-Za-z#\-\/!]/g, '') - 1); 
@@ -42,15 +44,18 @@ $(function () {
 			startSlide = currentSlide(),
 			hasSlid = 0;
 	
-	// start jQuery Cycle			
+	// append some markup for the controls		
 	cycleSelector.before('<div id="nav"><ul/></div>') 
+	// start jQuery Cycle	
 	.cycle({ 
 		 startingSlide: startSlide,
+		 // when using the next/prev links
    	 onPrevNextEvent: function(isNext, idx, slide) { 
    	 	hasSlid = 1;
    	 	window.location.hash = "photo-"+ (parseInt(idx) + 1) + ""; 
    	 	return false;
    	 },
+   	 // when using the pager thumbnails
    	 onPagerEvent: function(idx, slide) { 
    	 	hasSlid = 1;
    	 	window.location.hash = "photo-"+ (parseInt(idx) + 1) + ""; 
@@ -61,21 +66,23 @@ $(function () {
    	 pager:  '#nav ul',
    	 next: '#next',
    	 prev: '#prev',
-   	 speed: 300,
+   	 speed: 500,
+   	 // build the thumbnails
    	 pagerAnchorBuilder: function(idx, slide) { 
        return '<li><a href="#photo-'+ (idx+1) +'"><img src="' + slide.src + '" width="50" height="50" /></a></li>'; 
     } 
 	});
 	
-	
+	// bind to the hashchange event
 	$(window).bind('hashchange', function () {
 			var slideNo = currentSlide();
 			// we only want to fire the slide change if the next button or the pager hasn't done it for us
-			if (hasSlid === 0) { cycleSelector.cycle(slideNo); console.log('was hashchanged but nothing was clicked'); }
+			if (hasSlid === 0) { cycleSelector.cycle(slideNo); }
 			// return it back to zero
 			hasSlid = 0;
 	}); 
 	
+	// when the page loads, we need to trigger a hashchange
 	$(window).trigger( "hashchange" );
 	
 });
